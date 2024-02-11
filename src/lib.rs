@@ -26,7 +26,7 @@ pub fn get_next_prediction(input: &Vec<i64>) -> i64 {
         let vec = input
             .as_slice()
             .windows(2)
-            .map(|pair| pair[0].abs_diff(pair[1]).try_into().unwrap())
+            .map(|pair| pair[1] - pair[0])
             .collect::<Vec<_>>();
 
         // if all the differences are 0, return 0 (the last element)
