@@ -17,7 +17,7 @@ mod tests {
     #[test]
     fn test_parse_input_empty() {
         let input = "";
-        let expected: Vec<Vec<u32>> = Vec::new();
+        let expected: Vec<Vec<i64>> = Vec::new();
 
         let result = parse_input(input);
 
