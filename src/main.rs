@@ -28,3 +28,10 @@ fn with_test_input() {
 	println!("sum: {}", sum);
 	assert_eq!(sum, 114);
 }
+
+#[test]
+fn part2() {
+	let parsed = parse_input(&std::fs::read_to_string("data.txt").unwrap());
+	let result: i64 = parsed.iter().map(part2_next_prediction).sum();
+	println!("sum: {}", result);
+}

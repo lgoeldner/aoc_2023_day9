@@ -41,33 +41,30 @@ pub fn get_next_prediction(input: &Vec<i64>) -> i64 {
     input.last().unwrap() + recurse_diffvec_helper(input)
 }
 
-pub fn part2_next_prediction(input: &Vec<i64>) -> (i64, i64) {
-    fn recurse_diffvec_helper(input: &Vec<i64>) -> (i64, i64) {
+pub fn part2_next_prediction(input: &Vec<i64>) -> i64 {
+    fn __part2_recursehelper_diffvec(input: &Vec<i64>) -> i64 {
         // go through each pair of numbers in the vector and find the difference
-
         let vec = input
             .as_slice()
             .windows(2)
             .map(|pair| pair[1] - pair[0])
             .collect::<Vec<_>>();
 
-        // if all the differences are 0, return (0, 0) (the last / first element)
+        // if all the differences are 0, return 0 (the first element)
         // otherwise return the last difference + the result of the recursive call
         if vec.iter().all(|x| *x == 0) {
-            return (0, 0);
+            0
         } else {
-            let res = recurse_diffvec_helper(&vec);
-            let last_pred = vec.last().unwrap() + res.1;
-            let first_pred = vec.first().unwrap() - res.0;
-            return (first_pred, last_pred);
+            let res = __part2_recursehelper_diffvec(&vec);
+            let first_pred = vec.first().unwrap() - res;
+            first_pred
         }
     }
 
-    let res = recurse_diffvec_helper(&input);
+    let res = __part2_recursehelper_diffvec(&input);
 
-    let last_pred = input.last().unwrap() + res.1;
-    let first_pred = input.first().unwrap() - res.0;
-    (first_pred, last_pred)
+    let first_pred = input.first().unwrap() - res;
+    first_pred
 }
 
 #[cfg(test)]
@@ -77,11 +74,12 @@ mod tests {
         use crate::*;
 
         #[test]
-        fn part2() {
-            let data = "0 3 6 9 12 15";
-            let parsed = parse_input(data);
-            let result =  part2_next_prediction(&parsed[0]);
-            assert_eq!(result.0, -3);
+        fn part2_with_test_input() {
+            let parsed = parse_input(TEST_INPUT);
+
+			let result: i64 = parsed.iter().map(part2_next_prediction).sum();
+            // let result = part2_next_prediction(&parsed[0]);
+            assert_eq!(result, 2);
         }
 
         #[test]
