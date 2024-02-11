@@ -1,21 +1,30 @@
 use aoc_2023_day9::*;
 
-#[rustfmt::skip]
-const TEST_INPUT: &str = 
-"0 3 6 9 12 15
-1 3 6 10 15 21
-10 13 16 21 30 45";
-
 fn main() {
-    let parsed = parse_input(TEST_INPUT);
+    let parsed = parse_input(&std::fs::read_to_string("data.txt").unwrap());
     dbg!(&parsed);
+    let mut sum = 0;
+
     for line in parsed {
-        let vec = line
-            .as_slice()
-            .windows(2)
-            .map(|pair| pair[0].abs_diff(pair[1]))
-            .collect::<Vec<_>>();
-        dbg!(vec);
-        todo!();
+        let result = get_next_prediction(&line);
+        sum += result;
+        dbg!(result);
     }
+
+    println!("sum: {}", sum);
+}
+
+#[test]
+fn with_test_input() {
+	let parsed = parse_input(TEST_INPUT);
+	
+	let mut sum = 0;
+    for line in parsed {
+        let result = get_next_prediction(&line);
+        sum += result;
+        dbg!(result);
+    }
+
+	println!("sum: {}", sum);
+	assert_eq!(sum, 114);
 }
