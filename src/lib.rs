@@ -62,9 +62,7 @@ pub fn part2_next_prediction(input: &Vec<i64>) -> i64 {
     }
 
     let res = __part2_recursehelper_diffvec(&input);
-
-    let first_pred = input.first().unwrap() - res;
-    first_pred
+    input.first().unwrap() - res
 }
 
 #[cfg(test)]
